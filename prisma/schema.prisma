@@ -31,7 +31,7 @@ model User {
   addressEst       String?
   addressCEP       String?
   addressComp      String?
-  telephone        String             @db.VarChar(15)
+  telephone        String             @db.VarChar(15) @unique
   email            String             @unique
   password         String
   type             Role               @default(USR)
