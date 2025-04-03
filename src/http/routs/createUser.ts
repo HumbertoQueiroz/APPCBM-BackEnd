@@ -54,6 +54,7 @@ export async function createUser(app: FastifyInstance) {
       });
 
       if (existingUserWithCpf) {
+        console.log(' ======= //// CPF ja existe /// ========')
         return response.status(400).send({ error: "CPF já cadastrado" });
       }
 
@@ -63,6 +64,7 @@ export async function createUser(app: FastifyInstance) {
       });
 
       if (existingUserWithEmail) {
+        console.log('======= //// Email ja existe ///// =======')
         return response.status(400).send({ error: "Usuário já existe" });
       }
 
@@ -85,8 +87,9 @@ export async function createUser(app: FastifyInstance) {
       }
 
       await prisma.user.create({
-        data,
+        data: data
       });
+      console.log('======= //// Create user //// =======')
       return response.status(201).send({ status: "Success Created" });
     }
   );
