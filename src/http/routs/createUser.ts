@@ -12,7 +12,6 @@ export async function createUser(app: FastifyInstance) {
         body: z.object({
           userName: z.string(),
           cpf: z.string(),
-          addressFull: z.string().optional(),
           addressLog: z.string().optional(),
           addressNum: z.string().optional(),
           addressBai: z.string().optional(),
@@ -31,7 +30,6 @@ export async function createUser(app: FastifyInstance) {
       const {
         userName,
         cpf,
-        addressFull,
         addressLog,
         addressNum,
         addressBai,
@@ -39,6 +37,7 @@ export async function createUser(app: FastifyInstance) {
         addressEst,
         addressCEP,
         addressComp,
+        addrressIbge,
         telephone,
         email,
         password,

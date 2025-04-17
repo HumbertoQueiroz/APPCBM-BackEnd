@@ -23,14 +23,14 @@ model User {
   id               Int                @id @default(autoincrement())
   userName         String
   cpf              String             @unique @db.VarChar(14)
-  addressFull      String?
-  addressLog       String?
-  addressNum       String?
-  addressBai       String?
-  addressCit       String?
-  addressEst       String?
-  addressCEP       String?
-  addressComp      String?
+  addressLog       String
+  addressNum       String
+  addressBai       String
+  addressCit       String
+  addressEst       String
+  addressCEP       String
+  addressComp      String
+  addressIbge      String
   telephone        String             @db.VarChar(15) @unique
   email            String             @unique
   password         String
