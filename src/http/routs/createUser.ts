@@ -6,20 +6,21 @@ import type { ZodTypeProvider } from "fastify-type-provider-zod";
 
 export async function createUser(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
-    "/user",
+    "/create-user",
     {
       schema: {
         body: z.object({
           userName: z.string(),
           cpf: z.string(),
-          addressLog: z.string().optional(),
-          addressNum: z.string().optional(),
-          addressBai: z.string().optional(),
-          addressCit: z.string().optional(),
-          addressEst: z.string().optional(),
-          addressCEP: z.string().optional(),
+          addressStreet: z.string(),
+          addressNumber: z.string(),
+          addressDistrict: z.string(),
+          addressCity: z.string(),
+          addressState: z.string(),
+          addressCEP: z.string(),
           addressComp: z.string().optional(),
-          telephone: z.string(),
+          ibge: z.string().optional(),
+          phone: z.string(),
           email: z.string().email(),
           password: z.string(),
         }),
@@ -30,17 +31,17 @@ export async function createUser(app: FastifyInstance) {
       const {
         userName,
         cpf,
-        addressLog,
-        addressNum,
-        addressBai,
-        addressCit,
-        addressEst,
+        addressStreet,
+        addressNumber,
+        addressDistrict,
+        addressCity,
+        addressState,
         addressCEP,
         addressComp,
-        addrressIbge,
-        telephone,
+        phone,
         email,
         password,
+        ibge
       } = request.body;
 
       //_______________________//// Validações \\\\___________________________//
@@ -53,7 +54,7 @@ export async function createUser(app: FastifyInstance) {
       });
 
       if (existingUserWithCpf) {
-        console.log(' ======= //// CPF ja existe /// ========')
+        console.log(" ======= //// CPF ja existe /// ========");
         return response.status(400).send({ error: "CPF já cadastrado" });
       }
 
@@ -63,7 +64,7 @@ export async function createUser(app: FastifyInstance) {
       });
 
       if (existingUserWithEmail) {
-        console.log('======= //// Email ja existe ///// =======')
+        console.log("======= //// Email ja existe ///// =======");
         return response.status(400).send({ error: "Usuário já existe" });
       }
 
@@ -77,18 +78,19 @@ export async function createUser(app: FastifyInstance) {
       let data = {
         userName: userName,
         cpf: cpf,
-        telephone: telephone,
+        phone: phone,
         email: email,
         password: hashPassword,
       };
+      /*
       if (addressFull) {
         Object.assign(data, {addressFull:addressFull})
-      }
+      }*/
 
       await prisma.user.create({
-        data: data
+        data: data,
       });
-      console.log('======= //// Create user //// =======')
+      console.log("======= //// Create user //// =======");
       return response.status(201).send({ status: "Success Created" });
     }
   );
