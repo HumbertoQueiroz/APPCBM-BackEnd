@@ -3,6 +3,7 @@ import { prisma } from "../../libe/prisma";
 import bcrypt from "bcrypt";
 import z from "zod";
 import type { ZodTypeProvider } from "fastify-type-provider-zod";
+import {onlyNumber} from "../../function/onlyNumber"
 
 export async function createUser(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -10,19 +11,19 @@ export async function createUser(app: FastifyInstance) {
     {
       schema: {
         body: z.object({
-          userName: z.string(),
-          cpf: z.string(),
-          addressStreet: z.string(),
-          addressNumber: z.string(),
-          addressDistrict: z.string(),
-          addressCity: z.string(),
-          addressState: z.string(),
-          addressCEP: z.string(),
-          addressComp: z.string().optional(),
-          ibge: z.string().optional(),
-          phone: z.string(),
-          email: z.string().email(),
-          password: z.string(),
+          userName: z.string().trim(),
+          cpf: z.string().trim(),
+          addressStreet: z.string().trim(),
+          addressNumber: z.string().trim(),
+          addressDistrict: z.string().trim(),
+          addressCity: z.string().trim(),
+          addressState: z.string().trim(),
+          addressCEP: z.string().trim(),
+          addressComp: z.string().trim().optional(),
+          addressIbge: z.string().trim().optional(),
+          phone: z.string().trim(),
+          email: z.string().email().trim(),
+          password: z.string().trim(),
         }),
       },
     },
@@ -41,7 +42,7 @@ export async function createUser(app: FastifyInstance) {
         phone,
         email,
         password,
-        ibge
+        addressIbge
       } = request.body;
 
       //_______________________//// Validações \\\\___________________________//
@@ -50,12 +51,12 @@ export async function createUser(app: FastifyInstance) {
 
       // Validação para verificar se já existe um usuário com o CPF informado
       const existingUserWithCpf = await prisma.user.findUnique({
-        where: { cpf: cpf },
+        where: { cpf: onlyNumber(cpf) },
       });
 
       if (existingUserWithCpf) {
         console.log(" ======= //// CPF ja existe /// ========");
-        return response.status(400).send({ error: "CPF já cadastrado" });
+        return response.status(400).send({ message: "CPF já cadastrado" });
       }
 
       // Validação para verificar se já existe um usuário com o Email informado
@@ -64,8 +65,8 @@ export async function createUser(app: FastifyInstance) {
       });
 
       if (existingUserWithEmail) {
-        console.log("======= //// Email ja existe ///// =======");
-        return response.status(400).send({ error: "Usuário já existe" });
+        console.log("======= //// E-mail ja existe ///// =======");
+        return response.status(400).send({ message: "Usuário já cadastrado" });
       }
 
       //_______________________// Criando no Banco de Dados\\_________________//
@@ -74,21 +75,29 @@ export async function createUser(app: FastifyInstance) {
       //Cria hash da senha para salvar no banco de dados
       const hashPassword = await bcrypt.hash(password, 6);
 
-      //Dados
-      let data = {
-        userName: userName,
-        cpf: cpf,
-        phone: phone,
-        email: email,
-        password: hashPassword,
-      };
+      
       /*
       if (addressFull) {
         Object.assign(data, {addressFull:addressFull})
       }*/
-
+     
+        console.log(addressIbge)
       await prisma.user.create({
-        data: data,
+        data: {
+          userName,
+          cpf:onlyNumber(cpf),
+          phone:onlyNumber(phone),
+          email,
+          password: hashPassword,
+          addressStreet,
+          addressNumber,
+          addressDistrict,
+          addressCity,
+          addressState,
+          addressCEP,
+          addressComp,
+          addressIbge,
+        }
       });
       console.log("======= //// Create user //// =======");
       return response.status(201).send({ status: "Success Created" });

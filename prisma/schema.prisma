@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output = "./node_modules/.prisma/client"
 }
 
 datasource db {
@@ -30,8 +29,8 @@ model User {
   addressCity      String
   addressState     String
   addressCEP       String
-  addressComp      String
-  addressIbge      String
+  addressComp      String?
+  addressIbge      String?
   phone            String             @unique @db.VarChar(15)
   email            String             @unique
   password         String
