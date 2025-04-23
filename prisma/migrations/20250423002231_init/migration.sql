@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "User" ALTER COLUMN "addressComp" DROP NOT NULL,
+ALTER COLUMN "addressIbge" DROP NOT NULL;

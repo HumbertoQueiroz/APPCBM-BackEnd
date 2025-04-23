@@ -22,7 +22,7 @@ export async function createUser(app: FastifyInstance) {
           addressComp: z.string().trim().optional(),
           addressIbge: z.string().trim().optional(),
           phone: z.string().trim(),
-          email: z.string().email().trim(),
+          email: z.string().email().trim().transform(email => email.toLowerCase()),
           password: z.string().trim(),
         }),
       },
@@ -84,10 +84,10 @@ export async function createUser(app: FastifyInstance) {
         console.log(addressIbge)
       await prisma.user.create({
         data: {
-          userName,
+          userName: userName,
           cpf:onlyNumber(cpf),
           phone:onlyNumber(phone),
-          email,
+          email: email,
           password: hashPassword,
           addressStreet,
           addressNumber,
