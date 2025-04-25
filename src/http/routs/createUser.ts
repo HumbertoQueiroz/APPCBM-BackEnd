@@ -22,7 +22,7 @@ export async function createUser(app: FastifyInstance) {
           addressComp: z.string().trim().optional(),
           addressIbge: z.string().trim().optional(),
           phone: z.string().trim(),
-          email: z.string().email().trim().transform(email => email.toLowerCase()),
+          email: z.string().email().trim(),
           password: z.string().trim(),
         }),
       },
@@ -75,7 +75,12 @@ export async function createUser(app: FastifyInstance) {
       //Cria hash da senha para salvar no banco de dados
       const hashPassword = await bcrypt.hash(password, 6);
 
-      
+      console.log('TESTE: ',email)
+
+      const emailLocaleLowerCase = email.toLocaleLowerCase()
+     
+
+ 
       /*
       if (addressFull) {
         Object.assign(data, {addressFull:addressFull})
@@ -87,7 +92,7 @@ export async function createUser(app: FastifyInstance) {
           userName: userName,
           cpf:onlyNumber(cpf),
           phone:onlyNumber(phone),
-          email: email,
+          email: emailLocaleLowerCase,
           password: hashPassword,
           addressStreet,
           addressNumber,

@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "tsx watch src/http/server.ts",
     "seed": "tsx watch src/http/seed.ts",
-    "clear": "tsx watch src/http/clear.ts"
+    "clear": "tsx src/http/clear.ts"
   },
   "keywords": [],
   "author": "",
