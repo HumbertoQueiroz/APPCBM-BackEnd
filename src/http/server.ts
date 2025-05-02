@@ -1,30 +1,36 @@
-import fastify from 'fastify'
-import fastifyCors from '@fastify/cors'
+import fastify from "fastify";
+import fastifyCors from "@fastify/cors";
 //Jeito antigo
 //import { PrismaClient } from '@prisma/client'
 //const prisma = new PrismaClient()
 
-import { prisma } from '../libe/prisma'
-import { createUser } from './routs/createUser'
-import { serializerCompiler, validatorCompiler, type ZodTypeProvider } from 'fastify-type-provider-zod'
+import { prisma } from "../libe/prisma";
+import { createUser } from "./routs/createUser";
+import { loginUser } from "./routs/loginUser";
+import {
+  serializerCompiler,
+  validatorCompiler,
+  type ZodTypeProvider,
+} from "fastify-type-provider-zod";
 
-const app = fastify().withTypeProvider<ZodTypeProvider>()
+const app = fastify().withTypeProvider<ZodTypeProvider>();
 
 //ZOD validador de dados
-app.setSerializerCompiler(serializerCompiler)
-app.setValidatorCompiler(validatorCompiler)
-
+app.setSerializerCompiler(serializerCompiler);
+app.setValidatorCompiler(validatorCompiler);
 
 //necessário para aceitar rotas não locais
-app.register(fastifyCors)
+app.register(fastifyCors);
 
 //Registra nova rota
-app.register(createUser)
+app.register(createUser);
+//Registra nova rota
+app.register(loginUser);
 
 app
   .listen({
     port: 3333,
-    host:'0.0.0.0'
+    host: "0.0.0.0",
   })
   .then(() => {
     /*
@@ -45,8 +51,5 @@ app
     }
     main()
     */
-    console.log('HTTP server running!')
-  })
-
-
-
+    console.log("HTTP server running!");
+  });

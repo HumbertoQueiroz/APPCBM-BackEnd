@@ -1,8 +1,8 @@
 import type { FastifyInstance } from "fastify";
+import type { ZodTypeProvider } from "fastify-type-provider-zod";
+import z from "zod";
 import { prisma } from "../../libe/prisma";
 import bcrypt from "bcrypt";
-import z from "zod";
-import type { ZodTypeProvider } from "fastify-type-provider-zod";
 import {onlyNumber} from "../../function/onlyNumber"
 
 export async function createUser(app: FastifyInstance) {
@@ -55,7 +55,7 @@ export async function createUser(app: FastifyInstance) {
       });
 
       if (existingUserWithCpf) {
-        console.log(" ======= //// CPF ja existe /// ========");
+        console.log(" ======= //// Erro de Validação: CPF ja existe /// ========");
         return response.status(400).send({ message: "CPF já cadastrado" });
       }
 
@@ -65,7 +65,7 @@ export async function createUser(app: FastifyInstance) {
       });
 
       if (existingUserWithEmail) {
-        console.log("======= //// E-mail ja existe ///// =======");
+        console.log("======= //// Erro de Validação: E-mail ja existe ///// =======");
         return response.status(400).send({ message: "Usuário já cadastrado" });
       }
 
@@ -75,7 +75,7 @@ export async function createUser(app: FastifyInstance) {
       //Cria hash da senha para salvar no banco de dados
       const hashPassword = await bcrypt.hash(password, 6);
 
-      console.log('TESTE: ',email)
+      //console.log('TESTE: ',email)
 
       const emailLocaleLowerCase = email.toLocaleLowerCase()
      
@@ -86,7 +86,7 @@ export async function createUser(app: FastifyInstance) {
         Object.assign(data, {addressFull:addressFull})
       }*/
      
-        console.log(addressIbge)
+        //console.log(addressIbge)
       await prisma.user.create({
         data: {
           userName: userName,
