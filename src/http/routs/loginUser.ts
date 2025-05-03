@@ -36,7 +36,6 @@ export async function loginUser (app: FastifyInstance) {
 
       if(existingUserWithEmail){
         const passwordIsValid = await bcrypt.compare(password,existingUserWithEmail.password)
-        console.log("Senha: ",passwordIsValid)
         if(!passwordIsValid){
           console.log("======= //// Erro de Validação: Senha Incorreta ///// =======");
           return response.status(401).send({ message: "Usuário ou senha incorreto." });
