@@ -22,9 +22,11 @@ export async function loginUser (app: FastifyInstance) {
         password
       } = request.body;
 
+      const emailLocaleLowerCase = email.toLocaleLowerCase()
+
       // Validação para verificar se já existe um usuário com o Email informado
       const existingUserWithEmail = await prisma.user.findUnique({
-        where: { email: email },
+        where: { email: emailLocaleLowerCase },
       });
 
       if (!existingUserWithEmail) {
@@ -33,7 +35,8 @@ export async function loginUser (app: FastifyInstance) {
       }
 
       if(existingUserWithEmail){
-        const passwordIsValid = bcrypt.compare(password,existingUserWithEmail.password)
+        const passwordIsValid = await bcrypt.compare(password,existingUserWithEmail.password)
+        console.log("Senha: ",passwordIsValid)
         if(!passwordIsValid){
           console.log("======= //// Erro de Validação: Senha Incorreta ///// =======");
           return response.status(401).send({ message: "Usuário ou senha incorreto." });

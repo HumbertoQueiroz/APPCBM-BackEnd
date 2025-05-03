@@ -44,7 +44,8 @@ export async function createUser(app: FastifyInstance) {
         password,
         addressIbge
       } = request.body;
-
+      
+      const emailLocaleLowerCase = email.toLocaleLowerCase()
       //_______________________//// Validações \\\\___________________________//
 
       //Incluir validações aqui
@@ -61,7 +62,7 @@ export async function createUser(app: FastifyInstance) {
 
       // Validação para verificar se já existe um usuário com o Email informado
       const existingUserWithEmail = await prisma.user.findUnique({
-        where: { email: email },
+        where: { email: emailLocaleLowerCase },
       });
 
       if (existingUserWithEmail) {
@@ -77,7 +78,6 @@ export async function createUser(app: FastifyInstance) {
 
       //console.log('TESTE: ',email)
 
-      const emailLocaleLowerCase = email.toLocaleLowerCase()
      
 
  
