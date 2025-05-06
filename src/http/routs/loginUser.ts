@@ -31,14 +31,14 @@ export async function loginUser (app: FastifyInstance) {
 
       if (!existingUserWithEmail) {
         console.log("======= //// Erro de Validação: Usuário não existe ///// =======");
-        return response.status(401).send({ message: "Usuário ou senha incorreto." });
+        return response.status(401).send({ message: "cod01: Usuário ou senha incorreto." });
       }
 
       if(existingUserWithEmail){
         const passwordIsValid = await bcrypt.compare(password,existingUserWithEmail.password)
         if(!passwordIsValid){
           console.log("======= //// Erro de Validação: Senha Incorreta ///// =======");
-          return response.status(401).send({ message: "Usuário ou senha incorreto." });
+          return response.status(401).send({ message: "cod02: Usuário ou senha incorreto." });
         } 
         return response.status(200).send({ message: "Autorizado login." });
       }
