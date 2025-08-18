@@ -92,12 +92,17 @@ model Occurrence {
   description      String
   IncidentResponse IncidentResponse[]
   statusOccurrence statusOccurrence   @default(REGISTRADO)
+  hasVictim            Boolean    
+  victimsQuantity      Int?
+  conditionVictim      String?
+
+  
 }
 
 model IncidentResponse {
   id                    Int        @id @default(autoincrement())
   dateInit              DateTime   @default(now())
-  user                  User       @relation(fields: [userId], references: [id])
+  userResponse                  User       @relation(fields: [userId], references: [id])
   userId                Int        @map("atendente")
   occurrence            Occurrence @relation(fields: [occurrenceId], references: [id])
   occurrenceId          Int
