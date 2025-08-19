@@ -7,6 +7,7 @@ import fastifyCors from "@fastify/cors";
 import { prisma } from "../libe/prisma";
 import { createUser } from "./routs/createUser";
 import { loginUser } from "./routs/loginUser";
+import { occurrence } from "./routs/occurrence";
 import {
   serializerCompiler,
   validatorCompiler,
@@ -26,6 +27,8 @@ app.register(fastifyCors);
 app.register(createUser);
 //Registra nova rota
 app.register(loginUser);
+//Registra nova rota
+app.register(occurrence);
 
 app
   .listen({

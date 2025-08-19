@@ -82,7 +82,7 @@ model Occurrence {
   geoLat           Int?
   geoLong          Int?
   addressFull      String?
-  addressNum       String?
+  addressNum       String?  
   addressLog       String?
   addressBairro    String?
   addressCity      String?
