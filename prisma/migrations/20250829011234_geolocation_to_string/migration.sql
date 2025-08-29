@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "public"."Occurrence" ALTER COLUMN "geoLat" SET DATA TYPE TEXT,
+ALTER COLUMN "geoLong" SET DATA TYPE TEXT;

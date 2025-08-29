@@ -11,8 +11,8 @@ export async function occurrence (app: FastifyInstance) {
         body: z.object({
           user: z.string().email().trim().max(254, {message:"E-mail deve ter máximo de 254 caracteres"}).min(7,{message:"E-mail deve ter mínimo de 7 caracteres"}),
           natOco: z.string().trim().min(5,{message:"Natureza da Ocorrência deve ter no mínimo 5 caracteres"}).max(50,{message:"Natureza da Ocorrência deve ter no máximo 50 caracteres"}) ,
-          geoLat: z.number().optional(),
-          geoLong: z.number().optional(),
+          geoLat: z.number().max(91, {message:"Latitude deve ter máximo de 90"}).optional(),
+          geoLong: z.number().max(181, {message:"Latitude deve ter máximo de 180"}).optional(),
           addressNum: z.string().trim().max(254, {message:"Numero do endereço deve ter máximo de 254 caracteres"}).optional(),
           addressLog: z.string().trim().max(500, {message:"Logradouro/Rua/Avenida do endereço deve ter máximo de 500 caracteres"}).optional(),
           addressBairro: z.string().trim().max(254, {message:"Bairro do endereço deve ter máximo de 254 caracteres"}).optional(),
@@ -22,7 +22,7 @@ export async function occurrence (app: FastifyInstance) {
           addressComp: z.string().trim().max(500, {message:"Complemento do endereço deve ter máximo de 500 caracteres"}).optional(),
           description: z.string().trim().max(1000, {message:"Descrição da ocorrência deve ter máximo de 1000 caracteres"}).min(7,{message:"Descrição da ocorrência deve ter mínimo de 7 caracteres"}),
           hasVictim: z.boolean(),
-          victimsQuantity: z.number().optional(),
+          victimsQuantity: z.number().max(999999, {message:"Quantidade de vítimas deve ter máximo de 999999 caracteres"}).optional(),
           conditionVictim: z.string().trim().max(254, {message:"Condição da(s) vítima(s) deve ter máximo de 254 caracteres"}).optional(),
         }),
       },
@@ -59,12 +59,17 @@ export async function occurrence (app: FastifyInstance) {
         console.log("======= //// Erro de Validação: Usuário não existe ///// =======");
         return response.status(401).send({ message: "cod03: Não autorizado registrar ocorrência, usuário não registrado" });
       }
+      const stringGeoLat = geoLat?.toString() ?? null;
+      const stringGeoLong = geoLong?.toString() ?? null;
+      //console.log("stringGeoLat: ",stringGeoLat)
+      //console.log("stringGeoLong: ",stringGeoLong)
       
       if(existingUserWithEmail){
         const dataOccurrence = {
           userId: existingUserWithEmail.id,
-          natOco,geoLat,
-          geoLong,
+          natOco,
+          geoLat:stringGeoLat,
+          geoLong:stringGeoLong,
           addressNum,
           addressLog,
           addressBairro,
@@ -76,13 +81,17 @@ export async function occurrence (app: FastifyInstance) {
           hasVictim,
           victimsQuantity,
           conditionVictim, 
-
         }
-        
-        console.log("dados do user: ",existingUserWithEmail)
+
+        //console.log("dados do user: ",existingUserWithEmail)
         console.log("dados da ocorrência: ",dataOccurrence)
+        await prisma.occurrence.create({
+          data: dataOccurrence
+        });
+  
+
       
-        return response.status(200).send({ message: "Autorizado login." });
+        return response.status(200).send({ message: "Ocorrência registrada." });
       }
     }
   )

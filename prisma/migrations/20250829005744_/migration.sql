@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "public"."Occurrence" ALTER COLUMN "geoLat" SET DATA TYPE DECIMAL(19,16),
+ALTER COLUMN "geoLong" SET DATA TYPE DECIMAL(19,16);

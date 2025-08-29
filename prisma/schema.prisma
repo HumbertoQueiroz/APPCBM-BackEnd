@@ -79,8 +79,8 @@ model Occurrence {
   user             User               @relation(fields: [userId], references: [id])
   userId           Int                @map("informant")
   natOco           String
-  geoLat           Int?
-  geoLong          Int?
+  geoLat           String?
+  geoLong          String?
   addressFull      String?
   addressNum       String?  
   addressLog       String?
