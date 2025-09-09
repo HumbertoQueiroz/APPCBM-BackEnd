@@ -56,7 +56,7 @@ export async function occurrence (app: FastifyInstance) {
 
       
       if (!existingUserWithEmail) {
-        console.log("======= //// Erro de Validação: Usuário não existe ///// =======");
+        //console.log("======= //// Erro de Validação: Usuário não existe ///// =======");
         return response.status(401).send({ message: "cod03: Não autorizado registrar ocorrência, usuário não registrado" });
       }
       const stringGeoLat = geoLat?.toString() ?? null;
@@ -64,6 +64,13 @@ export async function occurrence (app: FastifyInstance) {
       //console.log("stringGeoLat: ",stringGeoLat)
       //console.log("stringGeoLong: ",stringGeoLong)
       
+      if(hasVictim){
+        if(!victimsQuantity )
+        return response.status(400).send({ message: "cod04: Informado que tem vítima(s), mas não informado a quantidade, favor verificar." });
+        if(!conditionVictim || conditionVictim.trim().length < 3 ){
+          return response.status(400).send({ message: "cod05: Informado que tem vítima(s), mas não informado a condição da(s) vítima(s), favor verificar." });
+        }
+      }
       if(existingUserWithEmail){
         const dataOccurrence = {
           userId: existingUserWithEmail.id,
