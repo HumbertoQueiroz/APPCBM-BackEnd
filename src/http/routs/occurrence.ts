@@ -91,6 +91,28 @@ export async function occurrence (app: FastifyInstance) {
         }
 
         //console.log("dados do user: ",existingUserWithEmail)
+        // Verificação de duplicidade nos últimos 3 minutos
+        const now = new Date();
+        const threeMinutesAgo = new Date(now.getTime() - 3 * 60 * 1000);
+
+        const existingOccurrence = await prisma.occurrence.findFirst({
+          where: {
+            userId: existingUserWithEmail.id,
+            natOco,
+            geoLat: stringGeoLat,
+            geoLong: stringGeoLong,
+            addressNum,
+            addressLog,
+            addressBairro,
+            createdAt: {
+              gte: threeMinutesAgo,
+            },
+          },
+        });
+
+        if (existingOccurrence) {
+          return response.status(409).send({ message: "Já existe uma ocorrência registrada com os mesmos dados nos últimos minutos." });
+        }
         console.log("dados da ocorrência: ",dataOccurrence)
         await prisma.occurrence.create({
           data: dataOccurrence
