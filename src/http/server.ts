@@ -23,6 +23,24 @@ app.setValidatorCompiler(validatorCompiler);
 //necessário para aceitar rotas não locais
 app.register(fastifyCors);
 
+// Rota GET para a página inicial com verificação do banco de dados
+app.get("/", async (request, reply) => {
+  console.log("Get in API rota: '/' \n API Backend online");
+  let dbStatus = "";
+  try {
+    // Testa conexão com o banco de dados
+    await prisma.$queryRaw`SELECT 1`;
+    dbStatus = "Banco de dados online";
+  } catch (error) {
+    const errMsg = error instanceof Error ? error.message : String(error);
+    dbStatus = `Banco de dados OFF: ${errMsg}`;
+  }
+  return {
+    message: "API backend online.",
+    db: dbStatus,
+  };
+});
+
 //Registra nova rota
 app.register(createUser);
 //Registra nova rota
