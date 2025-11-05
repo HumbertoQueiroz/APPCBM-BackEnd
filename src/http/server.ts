@@ -8,6 +8,8 @@ import { prisma } from "../libe/prisma";
 import { createUser } from "./routs/createUser";
 import { loginUser } from "./routs/loginUser";
 import { occurrence } from "./routs/occurrence";
+import { loginAdmin } from "./routs/loginAdmin";
+import { createAdmin } from "./routs/createAdmin";
 import {
   serializerCompiler,
   validatorCompiler,
@@ -47,6 +49,8 @@ app.register(createUser);
 app.register(loginUser);
 //Registra nova rota
 app.register(occurrence);
+app.register(loginAdmin);
+app.register(createAdmin);
 
 app
   .listen({
