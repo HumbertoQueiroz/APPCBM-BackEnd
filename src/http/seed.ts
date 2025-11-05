@@ -1,13 +1,16 @@
 import { prisma } from '../libe/prisma'
+import bcrypt from "bcrypt";
 
 async function seed() {
+
+  const hashPassword = await bcrypt.hash('987456321', 6);
     await prisma.user.create({
     data: {
       userName: 'Admin',
       cpf: '00000000000',
       phone: '0000000000000',
       email: 'admin@prisma.io',
-      password: '987456321',
+      password:  hashPassword,
       addressStreet:"teste",
       addressNumber:"1323",
       addressDistrict:"tegfv",
