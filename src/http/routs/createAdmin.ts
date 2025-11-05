@@ -123,6 +123,7 @@ export async function createAdmin(app: FastifyInstance) {
             addressCEP,
             addressComp,
             addressIbge,
+            type:'ADM',
           },
         });
 
@@ -132,7 +133,8 @@ export async function createAdmin(app: FastifyInstance) {
             userId: createdUser.id,
             matricula: onlyNumber(matricula),
             createdNewUser,
-            position
+            position,
+            createdByUserId: userWhoIsCreatingRecord.id,
           },
         });
 
