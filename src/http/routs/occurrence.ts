@@ -9,7 +9,7 @@ export async function occurrence (app: FastifyInstance) {
     {
       schema: {
         body: z.object({
-          user: z.string().email().trim().max(254, {message:"E-mail deve ter máximo de 254 caracteres"}).min(3,{message:"E-mail deve ter mínimo de 3 caracteres"}),
+          user: z.string().trim().max(254, {message:"E-mail deve ter máximo de 254 caracteres"}).min(3,{message:"E-mail deve ter mínimo de 3 caracteres"}),
           natOco: z.string().trim().min(5,{message:"Natureza da Ocorrência deve ter no mínimo 5 caracteres"}).max(50,{message:"Natureza da Ocorrência deve ter no máximo 50 caracteres"}) ,
           geoLat: z.number().max(91, {message:"Latitude deve ter máximo de 90"}).optional(),
           geoLong: z.number().max(181, {message:"Latitude deve ter máximo de 180"}).optional(),
