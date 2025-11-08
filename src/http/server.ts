@@ -10,6 +10,7 @@ import { loginUser } from "./routs/loginUser";
 import { occurrence } from "./routs/occurrence";
 import { loginAdmin } from "./routs/loginAdmin";
 import { createAdmin } from "./routs/createAdmin";
+import { listOccurrence } from "./routs/listOccurrence";
 import {
   serializerCompiler,
   validatorCompiler,
@@ -51,6 +52,7 @@ app.register(loginUser);
 app.register(occurrence);
 app.register(loginAdmin);
 app.register(createAdmin);
+app.register(listOccurrence);
 
 app
   .listen({
