@@ -16,6 +16,9 @@ import {
   validatorCompiler,
   type ZodTypeProvider,
 } from "fastify-type-provider-zod";
+import { createVehicle } from "./routs/createVehicle";
+import { listVehicles } from "./routs/listVehicles";
+import { respondOccurrence } from "./routs/respond-occurrence";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -47,12 +50,14 @@ app.get("/", async (request, reply) => {
 //Registra nova rota
 app.register(createUser);
 //Registra nova rota
-app.register(loginUser);
+app.register(loginUser); 
 //Registra nova rota
 app.register(occurrence);
 app.register(loginAdmin);
 app.register(createAdmin);
-app.register(listOccurrence);
+app.register(createVehicle);
+app.register(listVehicles);
+app.register(respondOccurrence);
 
 app
   .listen({

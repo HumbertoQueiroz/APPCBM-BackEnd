@@ -22,7 +22,7 @@ export async function createAdmin(app: FastifyInstance) {
           addressComp: z.string().trim().optional(),
           addressIbge: z.string().trim().optional(),
           phone: z.string().trim(),
-          email: z.string().email().trim(),
+          email: z.string().trim(),
           password: z.string().trim(),
           userWhoIsCreating: z.string().trim(),
           matricula: z.string().trim(),

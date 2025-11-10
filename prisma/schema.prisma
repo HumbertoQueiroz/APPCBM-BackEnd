@@ -64,7 +64,7 @@ model Vehicle {
   createdAt        DateTime           @default(now())
   user             User               @relation(fields: [userId], references: [id])
   userId           Int                @map("createdBy")
-  IncidentResponse IncidentResponse[]
+  incidentResponseLinks IncidentResponseVehicle[]
 }
 
 enum statusOccurrence {
@@ -106,8 +106,7 @@ model IncidentResponse {
   userId                Int        @map("atendente")
   occurrence            Occurrence @relation(fields: [occurrenceId], references: [id])
   occurrenceId          Int
-  vehicle               Vehicle?   @relation(fields: [vehicleId], references: [id])
-  vehicleId             Int?
+  incidentVehicles      IncidentResponseVehicle[]
   dateStartDisplacement DateTime?
   dateArrivalOccurrence DateTime?
   arrivalHospital       DateTime?
@@ -130,4 +129,12 @@ model Status {
   incidentResponseId     Int
   statusIncidentResponse statusIncidentResponse
   description            String?
+}
+
+model IncidentResponseVehicle {
+  id                    Int              @id @default(autoincrement())
+  incidentResponse      IncidentResponse @relation(fields: [incidentResponseId], references: [id])
+  incidentResponseId    Int
+  vehicle               Vehicle         @relation(fields: [vehicleId], references: [id])
+  vehicleId             Int
 }
