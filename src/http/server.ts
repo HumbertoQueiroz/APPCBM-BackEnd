@@ -56,6 +56,7 @@ app.register(occurrence);
 app.register(loginAdmin);
 app.register(createAdmin);
 app.register(createVehicle);
+app.register(listOccurrence);
 app.register(listVehicles);
 app.register(respondOccurrence);
 
