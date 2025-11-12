@@ -63,6 +63,7 @@ export async function respondOccurrence(app: FastifyInstance) {
             data: {
               userId: user.id,
               occurrenceId,
+              dateStartDisplacement: new Date(),
             },
           });
 

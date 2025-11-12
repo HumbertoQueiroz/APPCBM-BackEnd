@@ -19,6 +19,9 @@ import {
 import { createVehicle } from "./routs/createVehicle";
 import { listVehicles } from "./routs/listVehicles";
 import { respondOccurrence } from "./routs/respond-occurrence";
+import { getIncidentResponse } from "./routs/incidentResponse";
+import { isTrote } from "./routs/isTrote";
+import { createStatus } from "./routs/createStatus";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -59,6 +62,9 @@ app.register(createVehicle);
 app.register(listOccurrence);
 app.register(listVehicles);
 app.register(respondOccurrence);
+app.register(getIncidentResponse);
+app.register(isTrote);
+app.register(createStatus);
 
 app
   .listen({

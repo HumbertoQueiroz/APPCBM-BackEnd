@@ -95,8 +95,7 @@ model Occurrence {
   hasVictim            Boolean    
   victimsQuantity      Int?
   conditionVictim      String?
-
-  
+  isTrote              Boolean   @default(false)  
 }
 
 model IncidentResponse {
@@ -118,7 +117,7 @@ enum statusIncidentResponse {
   INICIO
   COMUNICACAO
   OBSERVACAO
-  LIGACAO
+  LIGACAO 
   FINALIZACAO
 }
 
