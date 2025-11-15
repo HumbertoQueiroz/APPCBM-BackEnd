@@ -22,6 +22,7 @@ import { respondOccurrence } from "./routs/respond-occurrence";
 import { getIncidentResponse } from "./routs/incidentResponse";
 import { isTrote } from "./routs/isTrote";
 import { createStatus } from "./routs/createStatus";
+import { finishedOccurrence } from "./routs/finishedOccurrence";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -65,6 +66,7 @@ app.register(respondOccurrence);
 app.register(getIncidentResponse);
 app.register(isTrote);
 app.register(createStatus);
+app.register(finishedOccurrence);
 
 app
   .listen({

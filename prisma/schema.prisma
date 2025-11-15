@@ -92,10 +92,10 @@ model Occurrence {
   description      String
   IncidentResponse IncidentResponse[]
   statusOccurrence statusOccurrence   @default(REGISTRADO)
-  hasVictim            Boolean    
-  victimsQuantity      Int?
-  conditionVictim      String?
-  isTrote              Boolean   @default(false)  
+  hasVictim        Boolean    
+  victimsQuantity  Int?
+  conditionVictim  String?
+  isTrote          Boolean   @default(false)
 }
 
 model IncidentResponse {
