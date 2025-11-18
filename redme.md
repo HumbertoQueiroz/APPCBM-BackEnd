@@ -26,3 +26,27 @@ Este comando mostra o estado atual das suas migrations, indicando quais já fora
 
 Apaga o banco de dados e recriar aplicando as migrações
 `npx prisma migrate reset`
+
+# Ocean Digital
+npm install
+npm install tsx
+nom install prisma
+npm install @prisma/client
+npx prisma init
+npx prisma generate
+npx prisma migrate deploy
+npm run dev
+
+
+
+-------
+
+npm install 
+npm install tsx
+npm install @prisma/client@6.19.0
+npm install @prisma/client --y
+
+npx prisma init --y
+npx prisma generate --y
+npx prisma migrate deploy
+npm run dev
