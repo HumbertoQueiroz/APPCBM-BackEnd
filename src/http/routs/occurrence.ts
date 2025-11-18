@@ -48,6 +48,7 @@ export async function occurrence (app: FastifyInstance) {
       } = request.body;
 
       const emailLocaleLowerCase = user.toLocaleLowerCase()
+      console.log("emailLocaleLowerCase: ",emailLocaleLowerCase);
 
       // Validação para verificar se já existe um usuário com o Email informado
       const existingUserWithEmail = await prisma.user.findFirst({
