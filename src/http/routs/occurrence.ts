@@ -50,9 +50,10 @@ export async function occurrence (app: FastifyInstance) {
       const emailLocaleLowerCase = user.toLocaleLowerCase()
 
       // Validação para verificar se já existe um usuário com o Email informado
-      const existingUserWithEmail = await prisma.user.findUnique({
+      const existingUserWithEmail = await prisma.user.findFirst({
         where: { email: emailLocaleLowerCase },
       });
+      console.log("existingUserWithEmail: ",existingUserWithEmail)
 
       
       if (!existingUserWithEmail) {
