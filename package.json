@@ -7,7 +7,7 @@
     "seed": "tsx watch src/http/seed.ts",
     "clear": "tsx src/http/clear.ts",
     "migrate": "npx prisma migrate deploy",
-    "build": "npx prisma generate && tsc"
+    "build": "npx prisma generate"
   },
   "keywords": [],
   "author": "",
