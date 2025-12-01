@@ -96,6 +96,7 @@ model Occurrence {
   victimsQuantity  Int?
   conditionVictim  String?
   isTrote          Boolean   @default(false)
+  finishedIn       Boolean   @default(false)
 }
 
 model IncidentResponse {
