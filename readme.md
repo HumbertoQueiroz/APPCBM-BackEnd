@@ -1,4 +1,17 @@
-# Backend APPCBM
+# Projeto completo
+
+Este repositório é uma das três camadas do sistema:
+
+| Camada | Repositório |
+|---|---|
+| App mobile | [APP-CBM-CAMPO-VERDE](https://github.com/HumbertoQueiroz/APP-CBM-CAMPO-VERDE) |
+| API | [APPCBM-BackEnd](https://github.com/HumbertoQueiroz/APPCBM-BackEnd) |
+| Painel web | este repositório |
+
+Trabalho de conclusão do curso de Análise e Desenvolvimento de Sistemas —
+IFMT, Campo Verde.
+
+## Backend APPCBM
 
 Será utilizado `node.js`com `typescript` e framework `fastify` [documentação](https://fastify.dev/docs/latest/Guides/Getting-Started/).
 
@@ -29,7 +42,10 @@ Apaga o banco de dados e recriar aplicando as migrações
 
 ## Ocean Digital
 
-Comando para subir o projeto na digital
+O backend e DB esta hospedado na VPS da Ocean Digital.
+
+Comando para subir o projeto:
+
 npm install
 npm install prisma@6.19.0
 npx prisma init
