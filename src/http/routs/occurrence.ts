@@ -11,8 +11,8 @@ export async function occurrence (app: FastifyInstance) {
         body: z.object({
           user: z.string().trim().max(254, {message:"E-mail deve ter máximo de 254 caracteres"}).min(3,{message:"E-mail deve ter mínimo de 3 caracteres"}),
           natOco: z.string().trim().min(5,{message:"Natureza da Ocorrência deve ter no mínimo 5 caracteres"}).max(50,{message:"Natureza da Ocorrência deve ter no máximo 50 caracteres"}) ,
-          geoLat: z.number().max(91, {message:"Latitude deve ter máximo de 90"}).optional(),
-          geoLong: z.number().max(181, {message:"Latitude deve ter máximo de 180"}).optional(),
+          geoLat: z.number().min(-90, {message:"Latitude deve estar entre -90 e 90"}).max(90, {message:"Latitude deve estar entre -90 e 90"}).optional(),
+          geoLong: z.number().min(-180, {message:"Longitude deve estar entre -180 e 180"}).max(180, {message:"Longitude deve estar entre -180 e 180"}).optional(),
           addressNum: z.string().trim().max(254, {message:"Numero do endereço deve ter máximo de 254 caracteres"}).optional(),
           addressLog: z.string().trim().max(500, {message:"Logradouro/Rua/Avenida do endereço deve ter máximo de 500 caracteres"}).optional(),
           addressBairro: z.string().trim().max(254, {message:"Bairro do endereço deve ter máximo de 254 caracteres"}).optional(),
@@ -61,10 +61,10 @@ export async function occurrence (app: FastifyInstance) {
         //console.log("======= //// Erro de Validação: Usuário não existe ///// =======");
         return response.status(401).send({ message: "cod03: Não autorizado registrar ocorrência, usuário não registrado" });
       }
-      const stringGeoLat = geoLat?.toString() ?? null;
-      const stringGeoLong = geoLong?.toString() ?? null;
-      //console.log("stringGeoLat: ",stringGeoLat)
-      //console.log("stringGeoLong: ",stringGeoLong)
+      // Coordenadas são gravadas como número (Float), permitindo cálculo de
+      // distância no banco. Ausência de localização é gravada como null.
+      const latitude = geoLat ?? null;
+      const longitude = geoLong ?? null;
       
       if(hasVictim){
         if(!victimsQuantity )
@@ -77,8 +77,8 @@ export async function occurrence (app: FastifyInstance) {
         const dataOccurrence = {
           userId: existingUserWithEmail.id,
           natOco,
-          geoLat:stringGeoLat,
-          geoLong:stringGeoLong,
+          geoLat: latitude,
+          geoLong: longitude,
           addressNum,
           addressLog,
           addressBairro,
@@ -101,8 +101,8 @@ export async function occurrence (app: FastifyInstance) {
           where: {
             userId: existingUserWithEmail.id,
             natOco,
-            geoLat: stringGeoLat,
-            geoLong: stringGeoLong,
+            geoLat: latitude,
+            geoLong: longitude,
             addressNum,
             addressLog,
             addressBairro,

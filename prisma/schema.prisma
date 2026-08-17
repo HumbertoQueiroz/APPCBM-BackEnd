@@ -79,8 +79,8 @@ model Occurrence {
   user             User               @relation(fields: [userId], references: [id])
   userId           Int                @map("informant")
   natOco           String
-  geoLat           String?
-  geoLong          String?
+  geoLat           Float?
+  geoLong          Float?
   addressFull      String?
   addressNum       String?  
   addressLog       String?
@@ -97,6 +97,8 @@ model Occurrence {
   conditionVictim  String?
   isTrote          Boolean   @default(false)
   finishedIn       Boolean   @default(false)
+
+  @@index([geoLat, geoLong], map: "Occurrence_geo_idx")
 }
 
 model IncidentResponse {
