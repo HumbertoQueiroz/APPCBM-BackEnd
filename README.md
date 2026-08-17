@@ -7,6 +7,7 @@ aplicativo mobile e serve o painel de despacho utilizado pela guarnição.
 Trabalho de conclusão do curso de Análise e Desenvolvimento de Sistemas —
 IFMT Câmpus Campo Verde. Trabalho reconhecido com **Troféu de Mérito
 Estudantil** na 1ª Jornada de Ensino, Pesquisa e Extensão do câmpus, em 2025.
+![alt text](IMG_20251206_095643.jpg)
 
 ## Stack
 
